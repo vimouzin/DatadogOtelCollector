@@ -1,0 +1,8 @@
+# Usa a imagem do OpenTelemetry Collector como base com arquitetura amd64
+FROM --platform=linux/amd64 otel/opentelemetry-collector-contrib:latest
+
+# Copie seu config.yaml local para o local esperado no contêiner
+COPY config.yaml /etc/otelcol/config.yaml
+
+# Defina o comando padrão para usar seu arquivo de configuração
+CMD ["--config", "/etc/otelcol/config.yaml"]

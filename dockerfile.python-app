@@ -1,0 +1,57 @@
+# Use uma imagem oficial do Python como base com a arquitetura amd64
+FROM --platform=linux/amd64 python:3.10-slim
+
+
+# Defina o diretório de trabalho no contêiner
+WORKDIR /app
+
+# Copie o código da aplicação para o contêiner
+COPY main.py /app/
+
+# Instale cada dependência uma de cada vez para isolar quaisquer problemas de instalação
+RUN pip install --no-cache-dir backoff==1.11.1
+RUN pip install --no-cache-dir blinker==1.8.2
+RUN pip install --no-cache-dir certifi==2024.8.30
+RUN pip install --no-cache-dir charset-normalizer==3.4.0
+RUN pip install --no-cache-dir click==8.1.7
+RUN pip install --no-cache-dir Deprecated==1.2.14
+RUN pip install --no-cache-dir Flask==3.0.3
+RUN pip install --no-cache-dir googleapis-common-protos==1.65.0
+RUN pip install --no-cache-dir grpcio==1.67.1
+RUN pip install --no-cache-dir idna==3.10
+RUN pip install --no-cache-dir importlib_metadata==8.5.0
+RUN pip install --no-cache-dir intervaltree==3.1.0
+RUN pip install --no-cache-dir itsdangerous==2.2.0
+RUN pip install --no-cache-dir Jinja2==3.1.4
+RUN pip install --no-cache-dir MarkupSafe==3.0.2
+RUN pip install --no-cache-dir opentelemetry-api==1.28.0
+RUN pip install --no-cache-dir opentelemetry-exporter-otlp==1.28.0
+RUN pip install --no-cache-dir opentelemetry-exporter-otlp-proto-common==1.28.0
+RUN pip install --no-cache-dir opentelemetry-exporter-otlp-proto-grpc==1.28.0
+RUN pip install --no-cache-dir opentelemetry-exporter-otlp-proto-http==1.28.0
+RUN pip install --no-cache-dir opentelemetry-instrumentation==0.49b0
+RUN pip install --no-cache-dir opentelemetry-instrumentation-flask==0.49b0
+RUN pip install --no-cache-dir opentelemetry-instrumentation-wsgi==0.49b0
+RUN pip install --no-cache-dir opentelemetry-proto==1.28.0
+RUN pip install --no-cache-dir opentelemetry-sdk==1.28.0
+RUN pip install --no-cache-dir opentelemetry-semantic-conventions==0.49b0
+RUN pip install --no-cache-dir opentelemetry-util-http==0.49b0
+RUN pip install --no-cache-dir packaging==24.1
+RUN pip install --no-cache-dir protobuf==5.28.3
+RUN pip install --no-cache-dir requests==2.32.3
+RUN pip install --no-cache-dir sortedcontainers==2.4.0
+RUN pip install --no-cache-dir tenacity==9.0.0
+RUN pip install --no-cache-dir typing_extensions==4.12.2
+RUN pip install --no-cache-dir urllib3==2.2.3
+RUN pip install --no-cache-dir Werkzeug==3.1.2
+RUN pip install --no-cache-dir wrapt==1.16.0
+RUN pip install --no-cache-dir zipp==3.20.2
+
+# Exponha a porta na qual o Flask será executado
+EXPOSE 5000
+
+# Defina a variável de ambiente para o Cloud Run reconhecer a porta
+ENV PORT=5000
+
+# Execute a aplicação Flask
+CMD ["python", "/app/main.py"]
